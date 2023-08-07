@@ -77,7 +77,6 @@
     return
 }
 
-
 ;; draw.io 加粗
 <!b::
 {
@@ -87,11 +86,24 @@
         send "!b"
     return
 }
-;; draw.io 加粗
+
+;; 复制
+<!c::
+{
+    if WinActive("ahk_exe Termius.exe") ;; Termius复制
+        send "^{Insert}"
+    else
+        send "^c"
+    return
+}
+
+;; 粘贴
 <!v::
 {
-    if WinActive("ahk_exe draw.io.exe")
+    if WinActive("ahk_exe draw.io.exe") ;; draw.io 无格式粘贴
         send "^+v"
+    else if WinActive("ahk_exe Termius.exe") ;; Termius 粘贴
+        send "+{Insert}"
     else
         send "^v"
     return

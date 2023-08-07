@@ -1,4 +1,5 @@
-# echo "source /c/Users/kratzer/Documents/AutoHotkey/terminal_proxy.sh" >> ~/.bashrc
+# echo "source /c/User/Documents/AutoHotkey/terminal_proxy.sh" >> ~/.bashrc
+# alias set-proxy='export https_proxy=127.0.0.1:7890 http_proxy=127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890'
 # 开启代理
 function proxy_on(){
    export ALL_PROXY=socks5://127.0.0.1:7890  # 注意你的端口号可能不是1087，注意修改
