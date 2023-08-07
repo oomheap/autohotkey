@@ -77,6 +77,26 @@
     return
 }
 
+
+;; draw.io 加粗
+<!b::
+{
+    if WinActive("ahk_exe draw.io.exe")
+        send "^b"
+    else
+        send "!b"
+    return
+}
+;; draw.io 加粗
+<!v::
+{
+    if WinActive("ahk_exe draw.io.exe")
+        send "^+v"
+    else
+        send "^v"
+    return
+}
+
 ;; 新建标签
 <!t::
 {
