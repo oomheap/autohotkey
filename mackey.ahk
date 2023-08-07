@@ -7,8 +7,21 @@
 ^!f::WinMaximize "A"
 
 ;; 行首/行末 Command(Alt)+Left/Right -> Home/End
-<!Left::Home
 <!Right::End
+<!Left::Home
+
+;; 任务切换 左右方向键
+;; ahk_class XamlExplorerHostIslandWindow
+;; ahk_exe explorer.exe
+;; Left::
+;; {
+;;     if WinActive("ahk_class XamlExplorerHostIslandWindow")
+;;       send "{Tab}"
+;;     else
+;;       send "{Left}"
+;;     return
+;; }
+
 
 ;; 退出 Command(Alt)+Q -> Alt+F4
 <!q::<!F4
@@ -87,6 +100,7 @@
     return
 }
 
+;;;;;;;;;;;;;; Termius
 ;; 复制
 <!c::
 {
@@ -96,8 +110,36 @@
         send "^c"
     return
 }
+;; 清屏
+<!k::
+{
+    if WinActive("ahk_exe Termius.exe") ;; Termius清屏
+        send "^l"
+    else
+        send "!k"
+    return
+}
+;; Up
+<!u::
+{
+    if WinActive("ahk_exe Termius.exe") ;; Up
+        send "{Up}"
+    else
+        send "!u"
+    return
+}
+;; Down
+<!d::
+{
+    if WinActive("ahk_exe Termius.exe") ;; Down
+        send "{Down}"
+    else
+        send "!d"
+    return
+}
+;;;;;;;;;;;;;; Termius
 
-;; 粘贴
+;; 粘贴【draw.io，Termius】
 <!v::
 {
     if WinActive("ahk_exe draw.io.exe") ;; draw.io 无格式粘贴
@@ -109,7 +151,29 @@
     return
 }
 
-;; 新建标签
+
+;;;;;;;;;;;;;;;;;;;;;;;;; draw.io
+;; 格式【draw.io】
+<!+p::
+{
+    if WinActive("ahk_exe draw.io.exe") ;; draw.io 格式
+        send "^+p"
+    else
+        send "!+p"
+    return
+}
+<!+k::
+{
+    if WinActive("ahk_exe draw.io.exe") ;; draw.io 格式
+        send "^+k"
+    else
+        send "!+k"
+    return
+}
+;;;;;;;;;;;;;;;;;;;;;;;;; draw.io
+
+
+;; 新建标签【Edge，文件资源管理器】
 <!t::
 {
     if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe")
@@ -119,7 +183,7 @@
     return
 }
 
-;; 光标定位地址栏
+;; 光标定位地址栏【Edge，文件资源管理器】
 <!l::
 {
     if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe")
