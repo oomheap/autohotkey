@@ -6,6 +6,9 @@
 ;; 最大化
 ^!f::WinMaximize "A"
 
+;;^!q::<#l
+
+
 ;; 行首/行末 Command(Alt)+Left/Right -> Home/End
 <!Right::End
 <!Left::Home
@@ -57,7 +60,7 @@
 ;; 查找
 <!f::
 {
-    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe dbeaver.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe ApiPost7.exe")
+    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe dbeaver.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe ApiPost7.exe") or WinActive("ahk_exe Postman.exe") or WinActive("ahk_exe Code.exe")
       send "^f"
     else
       send "!f"
@@ -90,15 +93,16 @@
     return
 }
 
-;; draw.io 加粗
+;; draw.io 加粗，WPS加粗
 <!b::
 {
-    if WinActive("ahk_exe draw.io.exe")
+    if WinActive("ahk_exe draw.io.exe") or WinActive("ahk_exe wps.exe")
         send "^b"
     else
         send "!b"
     return
 }
+
 
 ;;;;;;;;;;;;;; Termius
 ;; 复制
@@ -148,6 +152,16 @@
         send "+{Insert}"
     else
         send "^v"
+    return
+}
+
+;; WPS只粘贴文本
+<!+v::
+{
+    if WinActive("ahk_exe wps.exe") ;; WPS只粘贴文本
+        send "!^t"
+    else
+        send "!+v"
     return
 }
 
@@ -212,7 +226,7 @@
     return
 }
 
-; Alt + F5 激活 Intellij IDEA
+; Alt + F4 激活 Intellij IDEA
 <!F4::
 {
     if ( WinExist("ahk_exe idea64.exe") and WinActive("ahk_exe idea64.exe") ) {
@@ -221,6 +235,41 @@
     else if WinExist("ahk_exe idea64.exe") {
       WinActivate ; Use the window found by WinExist.
     }
+    
+    return
+}
+
+; Win + B 激活 Microsoft Edge
+<#b::
+{
+    if ( WinExist("ahk_exe msedge.exe") and WinActive("ahk_exe msedge.exe") ) {
+      ;;ToolTip "Timed ToolTip`nThis will be displayed for 5 seconds."
+      ;;SetTimer () => ToolTip(), -5000
+      WinMinimize ; Use the window found by WinWait.
+      ;;WinHide "ahk_exe Termius.exe"
+    }
+    else if WinExist("ahk_exe msedge.exe") {
+      WinActivate ; Use the window found by WinExist.
+    }
+    if not WinExist("ahk_exe msedge.exe")
+        run "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+    
+    return
+}
+; Alt + F3 激活 Microsoft Edge
+<!F3::
+{
+    if ( WinExist("ahk_exe msedge.exe") and WinActive("ahk_exe msedge.exe") ) {
+      ;;ToolTip "Timed ToolTip`nThis will be displayed for 5 seconds."
+      ;;SetTimer () => ToolTip(), -5000
+      WinMinimize ; Use the window found by WinWait.
+      ;;WinHide "ahk_exe Termius.exe"
+    }
+    else if WinExist("ahk_exe msedge.exe") {
+      WinActivate ; Use the window found by WinExist.
+    }
+    if not WinExist("ahk_exe msedge.exe")
+        run "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
     
     return
 }
