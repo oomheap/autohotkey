@@ -13,17 +13,25 @@
 <!Right::End
 <!Left::Home
 
-;; 任务切换 左右方向键
-;; ahk_class XamlExplorerHostIslandWindow
-;; ahk_exe explorer.exe
-;; Left::
-;; {
-;;     if WinActive("ahk_class XamlExplorerHostIslandWindow")
-;;       send "{Tab}"
-;;     else
-;;       send "{Left}"
-;;     return
-;; }
+
+;; 行首/行末 Command(Alt)+Left/Right -> Home/End
+<!Down::
+{
+    if WinActive("ahk_exe idea64.exe")
+        send "!{Down}"
+    else
+        send "^{End}"
+    return
+}
+<!Up::
+{
+    if WinActive("ahk_exe idea64.exe")
+        send "!{Up}"
+    else
+        send "^{Home}"
+    return
+}
+
 
 
 ;; 退出 Command(Alt)+Q -> Alt+F4
@@ -39,38 +47,20 @@
 <!s::^s ;; 保存
 
 
-;; 浏览器页面头部，尾部
-;;<!Up::
-;;{
-;;    if WinActive("ahk_exe msedge.exe")
-;;        send "{Home}"
-;;    else
-;;      send "^{Home}"
-;;    return
-;;}
-;;<!Down::
-;;{
-;;    if WinActive("ahk_exe msedge.exe")
-;;        send "{End}"
-;;    else
-;;      send "^{End}"
-;;    return
-;;}
-
 ;; 查找
 <!f::
 {
-    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe dbeaver.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe ApiPost7.exe") or WinActive("ahk_exe Postman.exe") or WinActive("ahk_exe Code.exe")
+    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe dbeaver.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe ApiPost7.exe") or WinActive("ahk_exe Postman.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe")
       send "^f"
     else
       send "!f"
     return
 }
 
-;; 关闭窗口（Tab）（Edge，文件管理器）
+;; 关闭窗口（Tab）（Edge，文件管理器，Visual Studio Code）
 <!w::
 {
-    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe")
+    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe")
         send "^w"
     else if WinActive("ahk_exe DingTalk.exe")
         WinMinimize ;; 使用WinActive找到的窗口
@@ -124,23 +114,23 @@
     return
 }
 ;; Up
-<!u::
-{
-    if WinActive("ahk_exe Termius.exe") ;; Up
-        send "{Up}"
-    else
-        send "!u"
-    return
-}
-;; Down
-<!d::
-{
-    if WinActive("ahk_exe Termius.exe") ;; Down
-        send "{Down}"
-    else
-        send "!d"
-    return
-}
+;;<!u::
+;;{
+;;    if WinActive("ahk_exe Termius.exe") ;; Up
+;;        send "{Up}"
+;;    else
+;;        send "!u"
+;;    return
+;;}
+;;;; Down
+;;<!d::
+;;{
+;;    if WinActive("ahk_exe Termius.exe") ;; Down
+;;        send "{Down}"
+;;    else
+;;        send "!d"
+;;    return
+;;}
 ;;;;;;;;;;;;;; Termius
 
 ;; 粘贴【draw.io，Termius】
@@ -148,7 +138,7 @@
 {
     if WinActive("ahk_exe draw.io.exe") ;; draw.io 无格式粘贴
         send "^+v"
-    else if WinActive("ahk_exe Termius.exe") ;; Termius 粘贴
+    else if WinActive("ahk_exe Termius.exe") or WinActive("ahk_exe Tabby.exe") ;; Termius，Tabby 粘贴
         send "+{Insert}"
     else
         send "^v"
@@ -211,10 +201,7 @@
 <!F1::
 {
     if ( WinExist("ahk_exe Termius.exe") and WinActive("ahk_exe Termius.exe") ) {
-      ;;ToolTip "Timed ToolTip`nThis will be displayed for 5 seconds."
-      ;;SetTimer () => ToolTip(), -5000
       WinMinimize ; Use the window found by WinWait.
-      ;;WinHide "ahk_exe Termius.exe"
     }
     else if WinExist("ahk_exe Termius.exe") {
       WinActivate ; Use the window found by WinExist.
@@ -243,10 +230,7 @@
 <#b::
 {
     if ( WinExist("ahk_exe msedge.exe") and WinActive("ahk_exe msedge.exe") ) {
-      ;;ToolTip "Timed ToolTip`nThis will be displayed for 5 seconds."
-      ;;SetTimer () => ToolTip(), -5000
       WinMinimize ; Use the window found by WinWait.
-      ;;WinHide "ahk_exe Termius.exe"
     }
     else if WinExist("ahk_exe msedge.exe") {
       WinActivate ; Use the window found by WinExist.
@@ -260,10 +244,7 @@
 <!F3::
 {
     if ( WinExist("ahk_exe msedge.exe") and WinActive("ahk_exe msedge.exe") ) {
-      ;;ToolTip "Timed ToolTip`nThis will be displayed for 5 seconds."
-      ;;SetTimer () => ToolTip(), -5000
       WinMinimize ; Use the window found by WinWait.
-      ;;WinHide "ahk_exe Termius.exe"
     }
     else if WinExist("ahk_exe msedge.exe") {
       WinActivate ; Use the window found by WinExist.
@@ -273,3 +254,19 @@
     
     return
 }
+
+; Win + T 激活 Tabby
+<#t::
+{
+    if ( WinExist("ahk_exe Tabby.exe") and WinActive("ahk_exe Tabby.exe") ) {
+      WinMinimize ; Use the window found by WinWait.
+    }
+    else if WinExist("ahk_exe Tabby.exe") {
+      WinActivate ; Use the window found by WinExist.
+    }
+    if not WinExist("ahk_exe Tabby.exe")
+        run "C:\Users\kratzer\AppData\Local\Programs\Tabby\Tabby.exe"
+    
+    return
+}
+
