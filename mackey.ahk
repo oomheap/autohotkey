@@ -50,7 +50,7 @@
 ;; 查找
 <!f::
 {
-    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe dbeaver.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe ApiPost7.exe") or WinActive("ahk_exe Postman.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe")
+    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe dbeaver.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe ApiPost7.exe") or WinActive("ahk_exe Postman.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe")
       send "^f"
     else
       send "!f"
@@ -60,7 +60,7 @@
 ;; 关闭窗口（Tab）（Edge，文件管理器，Visual Studio Code）
 <!w::
 {
-    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe")
+    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe")
         send "^w"
     else if WinActive("ahk_exe DingTalk.exe")
         WinMinimize ;; 使用WinActive找到的窗口
@@ -74,7 +74,7 @@
 ;; 刷新
 <!r::
 {
-    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe")
+    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe")
         send "^r"
     else if WinActive("ahk_exe DingTalk.exe")
         WinMinimize ;; 使用WinActive找到的窗口
@@ -180,7 +180,7 @@
 ;; 新建标签【Edge，文件资源管理器】
 <!t::
 {
-    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe")
+    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe")
         send "^t"
     else
         send "!t"
@@ -190,7 +190,7 @@
 ;; 光标定位地址栏【Edge，文件资源管理器】
 <!l::
 {
-    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe explorer.exe")
+    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe")
         send "^l"
     else
         send "!l"
@@ -226,17 +226,17 @@
     return
 }
 
-; Win + B 激活 Microsoft Edge
+; Win + B 激活 Brave
 <#b::
 {
-    if ( WinExist("ahk_exe msedge.exe") and WinActive("ahk_exe msedge.exe") ) {
+    if ( WinExist("ahk_exe brave.exe") and WinActive("ahk_exe brave.exe") ) {
       WinMinimize ; Use the window found by WinWait.
     }
-    else if WinExist("ahk_exe msedge.exe") {
+    else if WinExist("ahk_exe brave.exe") {
       WinActivate ; Use the window found by WinExist.
     }
-    if not WinExist("ahk_exe msedge.exe")
-        run "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+    if not WinExist("ahk_exe brave.exe")
+        run "C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
     
     return
 }
