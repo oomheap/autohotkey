@@ -1,4 +1,8 @@
-﻿
+﻿;; 重映射按键 (键盘, 鼠标和控制器) https://wyagd001.github.io/v2/docs/misc/Remap.htm
+
+;; 掩饰键 https://wyagd001.github.io/v2/docs/lib/A_MenuMaskKey.htm
+A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
+
 ;; 最小化
 !h::WinMinimize "A"
 !m::WinMinimize "A"
@@ -14,24 +18,22 @@
 <!Left::Home
 
 
-;; 行首/行末 Command(Alt)+Left/Right -> Home/End
 <!Down::
 {
     if WinActive("ahk_exe idea64.exe")
-        send "!{Down}"
+        SendEvent "!{Down}"
     else
-        send "^{End}"
+        SendEvent "^{End}"
     return
 }
 <!Up::
 {
     if WinActive("ahk_exe idea64.exe")
-        send "!{Up}"
+        SendEvent "!{Up}"
     else
-        send "^{Home}"
+        SendEvent "^{Home}"
     return
 }
-
 
 
 ;; 退出 Command(Alt)+Q -> Alt+F4
@@ -39,28 +41,47 @@
 
 
 ;; Command(Alt)+Z/X/C/V/A/F -> Ctrl+Z/X/C/V/A/F
-<!z::^z ;; 撤销
-<!x::^x ;; 剪切
-<!c::^c ;; 复制
-<!v::^v ;; 粘贴
-<!a::^a ;; 全选
-<!s::^s ;; 保存
+;; 撤销
+<!z::
+{
+	SendEvent "^z"
+}
+;; 复制
+<!c::
+{
+    SendEvent "^c"
+}
+;; 全选
+<!a::
+{
+    SendEvent "^a"
+}
+;; 保存
+<!s::
+{
+    SendEvent "^s"
+}
+;; 剪切
+<!x::
+{
+    SendEvent "^x"
+}
 
 
 ;; 查找
 <!f::
 {
-    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe dbeaver.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe ApiPost7.exe") or WinActive("ahk_exe Postman.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe")
-      send "^f"
+    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe dbeaver.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe ApiPost7.exe") or WinActive("ahk_exe Postman.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe") or WinActive("ahk_exe chrome.exe")
+      SendEvent "^f"
     else
-      send "!f"
+      SendEvent "!f"
     return
 }
 
 ;; 关闭窗口（Tab）（Edge，文件管理器，Visual Studio Code）
 <!w::
 {
-    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe")
+    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe") or WinActive("ahk_exe chrome.exe")
         send "^w"
     else if WinActive("ahk_exe DingTalk.exe")
         WinMinimize ;; 使用WinActive找到的窗口
@@ -74,7 +95,7 @@
 ;; 刷新
 <!r::
 {
-    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe")
+    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe chrome.exe")
         send "^r"
     else if WinActive("ahk_exe DingTalk.exe")
         WinMinimize ;; 使用WinActive找到的窗口
@@ -96,14 +117,15 @@
 
 ;;;;;;;;;;;;;; Termius
 ;; 复制
-<!c::
-{
-    if WinActive("ahk_exe Termius.exe") ;; Termius复制
-        send "^{Insert}"
-    else
-        send "^c"
-    return
-}
+;; <!c::
+;; {
+;;     if WinActive("ahk_exe Termius.exe") ;; Termius复制
+;;         send "^{Insert}"
+;;     else
+;;         ;;send "^c"
+;;         SendEvent "^c"
+;;     return
+;; }
 ;; 清屏
 <!k::
 {
@@ -113,24 +135,6 @@
         send "!k"
     return
 }
-;; Up
-;;<!u::
-;;{
-;;    if WinActive("ahk_exe Termius.exe") ;; Up
-;;        send "{Up}"
-;;    else
-;;        send "!u"
-;;    return
-;;}
-;;;; Down
-;;<!d::
-;;{
-;;    if WinActive("ahk_exe Termius.exe") ;; Down
-;;        send "{Down}"
-;;    else
-;;        send "!d"
-;;    return
-;;}
 ;;;;;;;;;;;;;; Termius
 
 ;; 粘贴【draw.io，Termius】
@@ -141,7 +145,7 @@
     else if WinActive("ahk_exe Termius.exe") or WinActive("ahk_exe Tabby.exe") ;; Termius，Tabby 粘贴
         send "+{Insert}"
     else
-        send "^v"
+        SendEvent "^v"
     return
 }
 
@@ -180,7 +184,7 @@
 ;; 新建标签【Edge，文件资源管理器】
 <!t::
 {
-    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe")
+    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe chrome.exe")
         send "^t"
     else
         send "!t"
@@ -190,26 +194,10 @@
 ;; 光标定位地址栏【Edge，文件资源管理器】
 <!l::
 {
-    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe")
+    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe chrome.exe")
         send "^l"
     else
         send "!l"
-    return
-}
-
-; Alt + F1 激活 Termius
-<!F1::
-{
-    if ( WinExist("ahk_exe Termius.exe") and WinActive("ahk_exe Termius.exe") ) {
-      WinMinimize ; Use the window found by WinWait.
-    }
-    else if WinExist("ahk_exe Termius.exe") {
-      WinActivate ; Use the window found by WinExist.
-    }
-    
-    if not WinExist("ahk_exe Termius.exe")
-        run "C:\Users\kratzer\AppData\Local\Programs\Termius\Termius.exe"
-    
     return
 }
 
@@ -255,6 +243,23 @@
     return
 }
 
+; Alt + F1 激活 Tabby
+<!F1::
+{
+    ;if ( WinExist("ahk_exe Termius.exe") and WinActive("ahk_exe Termius.exe") ) {
+    if ( WinExist("ahk_exe Tabby.exe") and WinActive("ahk_exe Tabby.exe") ) {
+      WinMinimize ; Use the window found by WinWait.
+    }
+    else if WinExist("ahk_exe Tabby.exe") {
+      WinActivate ; Use the window found by WinExist.
+    }
+    
+    if not WinExist("ahk_exe Tabby.exe")
+        ;run "C:\Users\kratzer\AppData\Local\Programs\Termius\Termius.exe"
+        run "C:\Program Files\Tabby\Tabby.exe"
+    
+    return
+}
 ; Win + T 激活 Tabby
 <#t::
 {
@@ -265,7 +270,7 @@
       WinActivate ; Use the window found by WinExist.
     }
     if not WinExist("ahk_exe Tabby.exe")
-        run "C:\Users\kratzer\AppData\Local\Programs\Tabby\Tabby.exe"
+        run "C:\Program Files\Tabby\Tabby.exe"
     
     return
 }
