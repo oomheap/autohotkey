@@ -8,7 +8,7 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 !m::WinMinimize "A"
 
 ;; 最大化
-^!f::WinMaximize "A"
+;; ^!f::WinMaximize "A"
 
 ;;^!q::<#l
 
@@ -17,6 +17,11 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 <!Right::End
 <!Left::Home
 
+; Win + ESC 激活 uTools
+<!Esc::<!Space
+;{
+;   SendEvent "<!Space"
+;}
 
 <!Down::
 {
@@ -239,7 +244,6 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
     }
     if not WinExist("ahk_exe msedge.exe")
         run "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-    
     return
 }
 
@@ -260,6 +264,7 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
     
     return
 }
+
 ; Win + T 激活 Tabby
 <#t::
 {
@@ -274,4 +279,3 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
     
     return
 }
-
