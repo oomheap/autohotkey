@@ -81,10 +81,10 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 	SendEvent "^z"
 }
 ;; 复制
-<!c::
-{
-    SendEvent "^c"
-}
+;; <!c::
+;; {
+;;     SendEvent "^c"
+;; }
 ;; 全选
 <!a::
 {
@@ -151,36 +151,31 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 
 ;;;;;;;;;;;;;; Termius
 ;; 复制
-;; <!c::
-;; {
-;;     if WinActive("ahk_exe Termius.exe") ;; Termius复制
-;;         SendEvent "^{Insert}"
-;;     else
-;;         ;;SendEvent "^c"
-;;         SendEvent "^c"
-;;     return
-;; }
+<!c::
+{
+    if WinActive("ahk_exe Termius.exe") or WinActive("ahk_exe mintty.exe") ;; Termius复制
+        SendEvent "^{Insert}"
+    else
+        SendEvent "^c"
+    return
+}
 
-;; 清屏
-#HotIf WinActive("ahk_exe Termius.exe")
-!k::^l
-#HotIf  ; 这里让后续的重映射和热键对所有窗口生效.
-;;<!k::
-;;{
-;;    if WinActive("ahk_exe Termius.exe") ;; Termius清屏
-;;        SendEvent "^l"
-;;    else
-;;        SendEvent "!k"
-;;    return
-;;}
-;;;;;;;;;;;;;; Termius
+<!k::
+{
+    if WinActive("ahk_exe Termius.exe") ;; Termius清屏
+        SendEvent "^l"
+    else
+        SendEvent "!k"
+    return
+}
+;;;;;;;;;;;; Termius
 
 ;; 粘贴【draw.io，Termius】
 <!v::
 {
     if WinActive("ahk_exe draw.io.exe") ;; draw.io 无格式粘贴
         SendEvent "^+v"
-    else if WinActive("ahk_exe Termius.exe") or WinActive("ahk_exe Tabby.exe") ;; Termius，Tabby 粘贴
+    else if WinActive("ahk_exe Termius.exe") or WinActive("ahk_exe Tabby.exe") or WinActive("ahk_exe mintty.exe") ;; Termius，Tabby 粘贴
         SendEvent "+{Insert}"
     else
         SendEvent "^v"
@@ -234,10 +229,14 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 {
     if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe chrome.exe")
         SendEvent "^l"
+    ;; Bash 窗体下修改为清屏
+    else if WinActive("ahk_exe Termius.exe") or WinActive("ahk_exe mintty.exe") or WinActive("ahk_exe Tabby.exe")
+        SendEvent "^l"
     else
         SendEvent "!l"
     return
 }
+
 
 ; Alt + F4 激活 Intellij IDEA
 <!F4::
