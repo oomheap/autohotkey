@@ -1,5 +1,9 @@
 ﻿;; 重映射按键 (键盘, 鼠标和控制器) https://wyagd001.github.io/v2/docs/misc/Remap.htm
 
+;; Alt键 物理上松开，逻辑上没有松开
+;; https://www.autohotkey.com/boards/viewtopic.php?t=111295
+;; https://meta.appinn.net/t/topic/38683
+
 ;; 掩饰键 https://wyagd001.github.io/v2/docs/lib/A_MenuMaskKey.htm
 A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 
@@ -21,6 +25,7 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 #f::!Space
 
 
+;; Alt + Esc 在切换窗口中生效，其他情况不生效
 #HotIf WinActive("ahk_class XamlExplorerHostIslandWindow")
 !Esc::!Esc
 #HotIf
@@ -29,17 +34,12 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 #HotIf
 
 
+;; uTools中 上 下 复制
 #HotIf WinActive("ahk_exe uTools.exe")
 !p::^p  ; Alt + P ==> Ctrl + P
 !j::Down  ; Alt + P ==> Ctrl + P
 !k::Up  ; Alt + P ==> Ctrl + P
 #HotIf  ; 这里让后续的重映射和热键对所有窗口生效.
-
-
-#HotIf WinActive("ahk_exe idea64.exe")
-;; <!Down::^]
-;; <!Up::^[
-#HotIf
 
 
 #HotIf not WinActive("ahk_exe idea64.exe")
@@ -115,14 +115,14 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 ;; 关闭窗口（Tab）（Edge，文件管理器，Visual Studio Code）
 <!w::
 {
-    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe") or WinActive("ahk_exe chrome.exe")
-        send "^w"
+    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe") or WinActive("ahk_exe chrome.exe") or WinActive("ahk_exe WeChatAppEx.exe")
+        SendEvent "^w"
     else if WinActive("ahk_exe DingTalk.exe")
         WinMinimize ;; 使用WinActive找到的窗口
     else if WinActive("ahk_exe WeChat.exe")
-        send "{Esc}" ;; 使用WinActive找到的窗口
+        SendEvent "{Esc}" ;; 使用WinActive找到的窗口
     else
-        send "!w"
+        SendEvent "!w"
     return
 }
 
@@ -130,11 +130,11 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 <!r::
 {
     if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe chrome.exe")
-        send "^r"
+        SendEvent "^r"
     else if WinActive("ahk_exe DingTalk.exe")
         WinMinimize ;; 使用WinActive找到的窗口
     else
-        send "!r"
+        SendEvent "!r"
     return
 }
 
@@ -142,9 +142,9 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 <!b::
 {
     if WinActive("ahk_exe draw.io.exe") or WinActive("ahk_exe wps.exe")
-        send "^b"
+        SendEvent "^b"
     else
-        send "!b"
+        SendEvent "!b"
     return
 }
 
@@ -154,9 +154,9 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 ;; <!c::
 ;; {
 ;;     if WinActive("ahk_exe Termius.exe") ;; Termius复制
-;;         send "^{Insert}"
+;;         SendEvent "^{Insert}"
 ;;     else
-;;         ;;send "^c"
+;;         ;;SendEvent "^c"
 ;;         SendEvent "^c"
 ;;     return
 ;; }
@@ -168,9 +168,9 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 ;;<!k::
 ;;{
 ;;    if WinActive("ahk_exe Termius.exe") ;; Termius清屏
-;;        send "^l"
+;;        SendEvent "^l"
 ;;    else
-;;        send "!k"
+;;        SendEvent "!k"
 ;;    return
 ;;}
 ;;;;;;;;;;;;;; Termius
@@ -179,9 +179,9 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 <!v::
 {
     if WinActive("ahk_exe draw.io.exe") ;; draw.io 无格式粘贴
-        send "^+v"
+        SendEvent "^+v"
     else if WinActive("ahk_exe Termius.exe") or WinActive("ahk_exe Tabby.exe") ;; Termius，Tabby 粘贴
-        send "+{Insert}"
+        SendEvent "+{Insert}"
     else
         SendEvent "^v"
     return
@@ -191,9 +191,9 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 <!+v::
 {
     if WinActive("ahk_exe wps.exe") ;; WPS只粘贴文本
-        send "!^t"
+        SendEvent "!^t"
     else
-        send "!+v"
+        SendEvent "!+v"
     return
 }
 
@@ -203,17 +203,17 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 <!+p::
 {
     if WinActive("ahk_exe draw.io.exe") ;; draw.io 格式
-        send "^+p"
+        SendEvent "^+p"
     else
-        send "!+p"
+        SendEvent "!+p"
     return
 }
 <!+k::
 {
     if WinActive("ahk_exe draw.io.exe") ;; draw.io 格式
-        send "^+k"
+        SendEvent "^+k"
     else
-        send "!+k"
+        SendEvent "!+k"
     return
 }
 ;;;;;;;;;;;;;;;;;;;;;;;;; draw.io
@@ -223,9 +223,9 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 <!t::
 {
     if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe chrome.exe")
-        send "^t"
+        SendEvent "^t"
     else
-        send "!t"
+        SendEvent "!t"
     return
 }
 
@@ -233,9 +233,9 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 <!l::
 {
     if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe chrome.exe")
-        send "^l"
+        SendEvent "^l"
     else
-        send "!l"
+        SendEvent "!l"
     return
 }
 
