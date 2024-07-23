@@ -78,7 +78,7 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
 ;; 撤销
 <!z::
 {
-	SendEvent "^z"
+    SendEvent "^z"
 }
 ;; 复制
 ;; <!c::
@@ -101,11 +101,21 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
     SendEvent "^x"
 }
 
+;; 打开浏览器调试工具
+<!e::
+{
+    if WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe chrome.exe")
+      SendEvent "F12"
+    else
+      SendEvent "!e"
+    return
+}
+
 
 ;; 查找
 <!f::
 {
-    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe dbeaver.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe ApiPost7.exe") or WinActive("ahk_exe Postman.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe") or WinActive("ahk_exe chrome.exe")
+    if WinActive("ahk_exe wps.exe") or WinActive("ahk_exe EXCEL.EXE") or WinActive("ahk_exe dbeaver.exe") or WinActive("ahk_exe msedge.exe") or WinActive("ahk_exe brave.exe") or WinActive("ahk_exe explorer.exe") or WinActive("ahk_exe ApiPost7.exe") or WinActive("ahk_exe Postman.exe") or WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Notepad.exe") or WinActive("ahk_exe chrome.exe")
       SendEvent "^f"
     else
       SendEvent "!f"
@@ -157,15 +167,6 @@ A_MenuMaskKey := "vkE8"  ; 将掩码键改成未分配的按键, 如 vkE8 等.
         SendEvent "^{Insert}"
     else
         SendEvent "^c"
-    return
-}
-
-<!k::
-{
-    if WinActive("ahk_exe Termius.exe") ;; Termius清屏
-        SendEvent "^l"
-    else
-        SendEvent "!k"
     return
 }
 ;;;;;;;;;;;; Termius
